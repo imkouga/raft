@@ -7,3 +7,20 @@ type StateMachine interface {
 	Save() ([]byte, error)
 	Recovery([]byte) error
 }
+
+type defaultStateMachine struct {
+	smData []byte
+}
+
+func NewStateMachine() StateMachine {
+	return &defaultStateMachine{}
+}
+
+func (sm *defaultStateMachine) Save() ([]byte, error) {
+	return sm.smData, nil
+}
+
+func (sm *defaultStateMachine) Recovery(b []byte) error {
+	sm.smData = b
+	return nil
+}
